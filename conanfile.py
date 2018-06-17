@@ -100,6 +100,10 @@ class SDL2ImageConan(ConanFile):
             tools.replace_in_file('SDL_image.vcxproj',
                                   '<PreprocessorDefinitions>',
                                   '<PreprocessorDefinitions>LOAD_XCF;')
+            if self.settings.build_type == 'Debug':
+                tools.replace_in_file('SDL_image.vcxproj',
+                                      'SDL2.lib',
+                                      'SDL2d.lib')
             handle_option(self.options.bmp, 'LOAD_BMP')
             handle_option(self.options.gif, 'LOAD_GIF')
             handle_option(self.options.jpeg, 'LOAD_JPG')
