@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from conans import ConanFile, MSBuild, tools
+from conans import ConanFile, MSBuild, AutoToolsBuildEnvironment, tools
 import os
 
 
@@ -20,8 +20,38 @@ class SDL2ImageConan(ConanFile):
 
     # Options may need to change depending on the packaged library.
     settings = "os", "arch", "compiler", "build_type"
-    options = {"shared": [True, False], "fPIC": [True, False]}
-    default_options = "shared=False", "fPIC=True"
+    options = {"shared": [True, False], \
+               "fPIC": [True, False], \
+               "bmp": [True, False], \
+               "gif": [True, False], \
+               "lbm": [True, False], \
+               "pcx": [True, False], \
+               "pnm": [True, False], \
+               "svg": [True, False], \
+               "tga": [True, False], \
+               "xcf": [True, False], \
+               "xpm": [True, False], \
+               "xv": [True, False], \
+               "jpeg": [True, False], \
+               "tiff": [True, False], \
+               "png": [True, False], \
+               "webp": [True, False]}
+    default_options = "shared=False", \
+                      "fPIC=True", \
+                      "bmp=True", \
+                      "gif=True", \
+                      "lbm=True", \
+                      "pcx=True", \
+                      "pnm=True", \
+                      "svg=True", \
+                      "tga=True", \
+                      "xcf=True", \
+                      "xpm=True", \
+                      "xv=True", \
+                      "jpeg=True", \
+                      "tiff=True", \
+                      "png=True", \
+                      "webp=True"
 
     # Custom attributes for Bincrafters recipe conventions
     source_subfolder = "source_subfolder"
@@ -34,6 +64,17 @@ class SDL2ImageConan(ConanFile):
     def config_options(self):
         if self.settings.os == 'Windows':
             del self.options.fPIC
+
+    def requirements(self):
+        if self.options.tiff:
+            self.requires.add('libtiff/4.0.9@bincrafters/stable')
+        if self.options.jpeg:
+            self.requires.add('libjpeg/9c@bincrafters/stable')
+        if self.options.png:
+            self.requires.add('libpng/1.6.34@bincrafters/stable')
+        if self.options.webp:
+            self.requires.add('libwebp/1.0.0@bincrafters/stable')
+        self.requires.add('zlib/1.2.11@conan/stable')
 
     def source(self):
         source_url = "https://www.libsdl.org/projects/SDL_image/release/SDL2_image-%s.tar.gz" % self.version
@@ -54,20 +95,37 @@ class SDL2ImageConan(ConanFile):
             msbuild.build('SDL_image.sln')
 
     def build_configure(self):
-        raise Exception('TODO')
+        with tools.chdir(self.source_subfolder):
+            env_build = AutoToolsBuildEnvironment(self)
+            args = ['--prefix=%s' % os.path.abspath(self.package_folder)]
+
+            args.append('--enable-bmp' if self.options.bmp else '--disable-bmp')
+            args.append('--enable-gif' if self.options.gif else '--disable-gif')
+            args.append('--enable-lbm' if self.options.lbm else '--disable-lbm')
+            args.append('--enable-pcx' if self.options.pcx else '--disable-pcx')
+            args.append('--enable-pnm' if self.options.pnm else '--disable-pnm')
+            args.append('--enable-svg' if self.options.svg else '--disable-svg')
+            args.append('--enable-tga' if self.options.tga else '--disable-tga')
+            args.append('--enable-xcf' if self.options.xcf else '--disable-xcf')
+            args.append('--enable-xpm' if self.options.xpm else '--disable-xpm')
+            args.append('--enable-xv' if self.options.xv else '--disable-xv')
+            args.append('--enable-jpg' if self.options.jpeg else '--disable-jpg')
+            args.append('--enable-tif' if self.options.tiff else '--disable-tif')
+            args.append('--enable-png' if self.options.png else '--disable-png')
+            args.append('--enable-webp' if self.options.webp else '--disable-webp')
+            if self.options.shared:
+                args.extend(['--disable-static', '--enable-shared'])
+            else:
+                args.extend(['--disable-shared', '--enable-static'])
+            if self.settings.os != 'Windows' and self.options.fPIC:
+                args.append('--with-pic')
+            env_build.configure(args=args)
+            env_build.make()
+            env_build.make(args=['install'])
 
     def package(self):
-        raise Exception('TODO')
         self.copy(pattern="LICENSE", dst="licenses", src=self.source_subfolder)
-        # If the CMakeLists.txt has a proper install method, the steps below may be redundant
-        # If so, you can just remove the lines below
-        include_folder = os.path.join(self.source_subfolder, "include")
-        self.copy(pattern="*", dst="include", src=include_folder)
-        self.copy(pattern="*.dll", dst="bin", keep_path=False)
-        self.copy(pattern="*.lib", dst="lib", keep_path=False)
-        self.copy(pattern="*.a", dst="lib", keep_path=False)
-        self.copy(pattern="*.so*", dst="lib", keep_path=False)
-        self.copy(pattern="*.dylib", dst="lib", keep_path=False)
 
     def package_info(self):
-        self.cpp_info.libs = tools.collect_libs(self)
+        self.cpp_info.libs = ['SDL2_image']
+        self.cpp_info.includedirs.append(os.path.join('include', 'SDL2'))
