@@ -115,7 +115,7 @@ class SDL2ImageConan(ConanFile):
             handle_option(self.options.xpm, 'LOAD_XPM')
             handle_option(self.options.xv, 'LOAD_XV')
             msbuild = MSBuild(self)
-            msbuild.build('SDL_image.sln', targets=['SDL2_image'])
+            msbuild.build('SDL_image.sln', targets=['SDL2_image'], platforms={"x86": "Win32"})
 
     def build_configure(self):
         with tools.chdir(self.source_subfolder):
