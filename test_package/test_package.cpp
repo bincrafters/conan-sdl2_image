@@ -2,7 +2,7 @@
 #include <iostream>
 #include "SDL_image.h"
 
-int main()
+int main(int argc, char *argv[])
 {
     SDL_version compile_version;
     const SDL_version * link_version=IMG_Linked_Version();
@@ -13,7 +13,7 @@ int main()
         int(compile_version.patch) << std::endl;
     std::cout << "SDL2_image link version: " <<
         int(link_version->major) << "." <<
-	int(link_version->minor) << "." <<
-	int(link_version->patch) << std::endl;
+        int(link_version->minor) << "." <<
+        int(link_version->patch) << std::endl;
     return EXIT_SUCCESS;
 }
