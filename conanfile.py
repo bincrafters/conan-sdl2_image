@@ -89,10 +89,33 @@ class SDL2ImageConan(ConanFile):
             self.build_configure()
 
     def build_msvc(self):
+        def handle_option(option, name):
+            if not option:
+                tools.replace_in_file('SDL_image.vcxproj', name + ';', '')
+
         with tools.chdir(os.path.join(self.source_subfolder, 'VisualC')):
+            tools.replace_in_file('SDL_image.vcxproj',
+                                  '<AdditionalDependencies>',
+                                  '<AdditionalDependencies>winmm.lib;version.lib;imm32.lib;')
+            tools.replace_in_file('SDL_image.vcxproj',
+                                  '<PreprocessorDefinitions>',
+                                  '<PreprocessorDefinitions>LOAD_XCF;')
+            handle_option(self.options.bmp, 'LOAD_BMP')
+            handle_option(self.options.gif, 'LOAD_GIF')
+            handle_option(self.options.jpeg, 'LOAD_JPG')
+            handle_option(self.options.lbm, 'LOAD_LBM')
+            handle_option(self.options.pcx, 'LOAD_PCX')
+            handle_option(self.options.png, 'LOAD_PNG')
+            handle_option(self.options.pnm, 'LOAD_PNM')
+            handle_option(self.options.svg, 'LOAD_SVG')
+            handle_option(self.options.tga, 'LOAD_TGA')
+            handle_option(self.options.tiff, 'LOAD_TIF')
+            handle_option(self.options.webp, 'LOAD_WEBP')
+            handle_option(self.options.xcf, 'LOAD_XCF')
+            handle_option(self.options.xpm, 'LOAD_XPM')
+            handle_option(self.options.xv, 'LOAD_XV')
             msbuild = MSBuild(self)
-            msbuild.build_env.link_flags = ['/lib', 'winmm.lib']
-            msbuild.build('SDL_image.sln')
+            msbuild.build('SDL_image.sln', targets=['SDL2_image'])
 
     def build_configure(self):
         with tools.chdir(self.source_subfolder):
@@ -125,6 +148,12 @@ class SDL2ImageConan(ConanFile):
 
     def package(self):
         self.copy(pattern="LICENSE", dst="licenses", src=self.source_subfolder)
+        if self.settings.compiler == 'Visual Studio':
+            self.copy(pattern="SDL_image.h", dst=os.path.join('include', 'SDL2'), src=self.source_subfolder)
+            arch = 'x64' if self.settings.arch == 'x86_64' else 'Win32'
+            libdir = os.path.join(self.source_subfolder, 'VisualC', arch, str(self.settings.build_type))
+            self.copy(pattern="SDL2_image.lib", dst='lib', src=libdir)
+            self.copy(pattern="SDL2_image.dll", dst='bin', src=libdir)
 
     def package_info(self):
         self.cpp_info.libs = ['SDL2_image']
