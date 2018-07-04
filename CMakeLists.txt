@@ -49,6 +49,7 @@ source_subfolder/IMG_webp.c
 add_library(${PROJECT_NAME} ${SOURCES})
 
 target_include_directories(${PROJECT_NAME} PRIVATE "source_subfolder")
+target_link_libraries(${PROJECT_NAME} PRIVATE ${CONAN_LIBS})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER source_subfolder/SDL_image.h)
 
