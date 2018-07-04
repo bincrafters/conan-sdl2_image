@@ -1,0 +1,60 @@
+project(SDL2_image)
+
+include(conanbuildinfo.cmake)
+conan_basic_setup()
+
+macro(add_image_option type)
+  option(${type} "${type} images support" ON)
+  if(${type})
+    add_definitions("-DLOAD_${type}")
+    if(${type}_DYNAMIC)
+      add_definitions("-DLOAD_${type}_DYNAMIC")
+    endif()
+  endif()
+endmacro()
+
+add_image_option(BMP)
+add_image_option(GIF)
+add_image_option(JPG)
+add_image_option(LBM)
+add_image_option(PCX)
+add_image_option(PNG)
+add_image_option(PNM)
+add_image_option(SVG)
+add_image_option(TGA)
+add_image_option(TIF)
+add_image_option(WEBP)
+add_image_option(XCF)
+add_image_option(XPM)
+add_image_option(XV)
+
+set(SOURCES
+source_subfolder/IMG.c
+source_subfolder/IMG_bmp.c
+source_subfolder/IMG_gif.c
+source_subfolder/IMG_jpg.c
+source_subfolder/IMG_lbm.c
+source_subfolder/IMG_pcx.c
+source_subfolder/IMG_png.c
+source_subfolder/IMG_pnm.c
+source_subfolder/IMG_svg.c
+source_subfolder/IMG_tga.c
+source_subfolder/IMG_tif.c
+source_subfolder/IMG_xcf.c
+source_subfolder/IMG_xpm.c
+source_subfolder/IMG_xv.c
+source_subfolder/IMG_webp.c
+)
+
+add_library(${PROJECT_NAME} ${SOURCES})
+
+target_include_directories(${PROJECT_NAME} PRIVATE "source_subfolder")
+
+set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER source_subfolder/SDL_image.h)
+
+install(TARGETS ${PROJECT_NAME}
+  ARCHIVE DESTINATION "lib"
+  LIBRARY DESTINATION "lib"
+  RUNTIME DESTINATION "bin"
+  PUBLIC_HEADER DESTINATION "include/SDL2"
+)
