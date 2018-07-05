@@ -29,7 +29,8 @@ class SDL2ImageConan(ConanFile):
                "jpg": [True, False],
                "tif": [True, False],
                "png": [True, False],
-               "webp": [True, False]}
+               "webp": [True, False],
+               "imageio": [True, False]}
     default_options = "shared=False", \
                       "fPIC=True", \
                       "bmp=True", \
@@ -45,7 +46,8 @@ class SDL2ImageConan(ConanFile):
                       "jpg=True", \
                       "tif=True", \
                       "png=True", \
-                      "webp=True"
+                      "webp=True", \
+                      "imageio=False"
     source_subfolder = "source_subfolder"
     build_subfolder = "build_subfolder"
     exports_sources = ["CMakeLists.txt"]
@@ -55,6 +57,8 @@ class SDL2ImageConan(ConanFile):
         del self.settings.compiler.libcxx
         if self.settings.os == 'Windows':
             del self.options.fPIC
+        if self.settings.os != 'Macos':
+            del self.options.imageio
 
     def requirements(self):
         self.requires.add('sdl2/2.0.8@bincrafters/stable')
@@ -96,6 +100,10 @@ class SDL2ImageConan(ConanFile):
         cmake.definitions['JPG_DYNAMIC'] = self.options['libjpeg'].shared if self.options.jpg else False
         cmake.definitions['PNG_DYNAMIC'] = self.options['libpng'].shared  if self.options.png else False
         cmake.definitions['WEBP_DYNAMIC'] = self.options['libwebp'].shared if self.options.webp else False
+        if self.settings.os == 'Macos':
+            cmake.definitions['IMAGEIO'] = self.options.imageio
+        else:
+            cmake.definitions['IMAGEIO'] = False
         cmake.configure(build_dir='build')
         cmake.build()
         cmake.install()

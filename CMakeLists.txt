@@ -13,6 +13,15 @@ macro(add_image_option type)
   endif()
 endmacro()
 
+if(APPLE)
+  option(IMAGEIO "use native Mac OS X frameworks for loading images" ON)
+  if(IMAGEIO)
+    set(IMAGEIO_SOURCE "source_subfolder/IMG_ImageIO.m")
+  else()
+    add_definitions("-DSDL_IMAGE_USE_COMMON_BACKEND")
+  endif()
+endif()
+
 add_image_option(BMP)
 add_image_option(GIF)
 add_image_option(JPG)
@@ -44,6 +53,7 @@ source_subfolder/IMG_xcf.c
 source_subfolder/IMG_xpm.c
 source_subfolder/IMG_xv.c
 source_subfolder/IMG_webp.c
+${IMAGEIO_SOURCE}
 )
 
 add_library(${PROJECT_NAME} ${SOURCES})
