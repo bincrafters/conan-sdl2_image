@@ -26,7 +26,7 @@ class SDL2ImageConan(ConanFile):
                "xcf": [True, False],
                "xpm": [True, False],
                "xv": [True, False],
-               "jpg": [True, False],
+               "jpg": ['libjpeg', 'libjpeg-turbo', False],
                "tif": [True, False],
                "png": [True, False],
                "webp": [True, False],
@@ -43,7 +43,7 @@ class SDL2ImageConan(ConanFile):
                       "xcf=True", \
                       "xpm=True", \
                       "xv=True", \
-                      "jpg=True", \
+                      "jpg=libjpeg-turbo", \
                       "tif=True", \
                       "png=True", \
                       "webp=True", \
@@ -64,8 +64,10 @@ class SDL2ImageConan(ConanFile):
         self.requires.add('sdl2/2.0.8@bincrafters/stable')
         if self.options.tif:
             self.requires.add('libtiff/4.0.9@bincrafters/stable')
-        if self.options.jpg:
+        if self.options.jpg == 'libjpeg':
             self.requires.add('libjpeg/9c@bincrafters/stable')
+        elif self.options.jpg == 'libjpeg-turbo':
+            self.requires.add('libjpeg-turbo/1.5.2@bincrafters/stable')
         if self.options.png:
             self.requires.add('libpng/1.6.34@bincrafters/stable')
         if self.options.webp:
@@ -98,7 +100,7 @@ class SDL2ImageConan(ConanFile):
         cmake.definitions['XV'] = self.options.xv
         cmake.definitions['TIF_DYNAMIC'] = self.options['libtiff'].shared if self.options.tif else False
         cmake.definitions['JPG_DYNAMIC'] = self.options['libjpeg'].shared if self.options.jpg else False
-        cmake.definitions['PNG_DYNAMIC'] = self.options['libpng'].shared  if self.options.png else False
+        cmake.definitions['PNG_DYNAMIC'] = self.options['libpng'].shared if self.options.png else False
         cmake.definitions['WEBP_DYNAMIC'] = self.options['libwebp'].shared if self.options.webp else False
         if self.settings.os == 'Macos':
             cmake.definitions['IMAGEIO'] = self.options.imageio
