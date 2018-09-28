@@ -76,7 +76,7 @@ class SDL2ImageConan(ConanFile):
 
     def source(self):
         source_url = "https://www.libsdl.org/projects/SDL_image/release/SDL2_image-%s.tar.gz" % self.version
-        tools.get(source_url)
+        tools.get(source_url, sha256="3510c25da735ffcd8ce3b65073150ff4f7f9493b866e85b83738083b556d2368")
         extracted_dir = "SDL2_image-" + self.version
         os.rename(extracted_dir, self.source_subfolder)
 
