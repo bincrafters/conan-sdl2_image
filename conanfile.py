@@ -13,6 +13,8 @@ class SDL2ImageConan(ConanFile):
     homepage = "https://www.libsdl.org/projects/SDL_image/"
     license = "MIT"
     exports = ["LICENSE.md"]
+    exports_sources = ["CMakeLists.txt"]
+    generators = ["cmake"]
     settings = "os", "arch", "compiler", "build_type"
     options = {"shared": [True, False],
                "fPIC": [True, False],
@@ -50,8 +52,6 @@ class SDL2ImageConan(ConanFile):
                       "imageio=False"
     source_subfolder = "source_subfolder"
     build_subfolder = "build_subfolder"
-    exports_sources = ["CMakeLists.txt"]
-    generators = ['cmake']
 
     def config_options(self):
         del self.settings.compiler.libcxx
@@ -82,8 +82,6 @@ class SDL2ImageConan(ConanFile):
 
     def build(self):
         cmake = CMake(self)
-        if self.settings.os != 'Windows':
-            cmake.definitions['CMAKE_POSITION_INDEPENDENT_CODE'] = self.options.fPIC
         cmake.definitions['BMP'] = self.options.bmp
         cmake.definitions['GIF'] = self.options.gif
         cmake.definitions['JPG'] = self.options.jpg
