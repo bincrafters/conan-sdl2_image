@@ -7,8 +7,9 @@ import os
 
 class SDL2ImageConan(ConanFile):
     name = "sdl2_image"
-    version = "2.0.3"
+    version = "2.0.4"
     description = "SDL_image is an image file loading library"
+    topcis = ("conan", "sdl2_image", "sdl_image", "sdl2", "sdl", "images", "opengl")
     url = "https://github.com/bincrafters/conan-sdl2_image"
     homepage = "https://www.libsdl.org/projects/SDL_image/"
     license = "MIT"
@@ -16,42 +17,44 @@ class SDL2ImageConan(ConanFile):
     exports_sources = ["CMakeLists.txt"]
     generators = ["cmake"]
     settings = "os", "arch", "compiler", "build_type"
-    options = {"shared": [True, False],
-               "fPIC": [True, False],
-               "bmp": [True, False],
-               "gif": [True, False],
-               "lbm": [True, False],
-               "pcx": [True, False],
-               "pnm": [True, False],
-               "svg": [True, False],
-               "tga": [True, False],
-               "xcf": [True, False],
-               "xpm": [True, False],
-               "xv": [True, False],
-               "jpg": ['libjpeg', 'libjpeg-turbo', False],
-               "tif": [True, False],
-               "png": [True, False],
-               "webp": [True, False],
-               "imageio": [True, False]}
-    default_options = "shared=False", \
-                      "fPIC=True", \
-                      "bmp=True", \
-                      "gif=True", \
-                      "lbm=True", \
-                      "pcx=True", \
-                      "pnm=True", \
-                      "svg=True", \
-                      "tga=True", \
-                      "xcf=True", \
-                      "xpm=True", \
-                      "xv=True", \
-                      "jpg=libjpeg-turbo", \
-                      "tif=True", \
-                      "png=True", \
-                      "webp=True", \
-                      "imageio=False"
-    source_subfolder = "source_subfolder"
-    build_subfolder = "build_subfolder"
+    options = {
+        "shared": [True, False],
+        "fPIC": [True, False],
+        "bmp": [True, False],
+        "gif": [True, False],
+        "lbm": [True, False],
+        "pcx": [True, False],
+        "pnm": [True, False],
+        "svg": [True, False],
+        "tga": [True, False],
+        "xcf": [True, False],
+        "xpm": [True, False],
+        "xv": [True, False],
+        "jpg": ['libjpeg', 'libjpeg-turbo', False],
+        "tif": [True, False],
+        "png": [True, False],
+        "webp": [True, False],
+        "imageio": [True, False]}
+    default_options = {
+        "shared": False,
+        "fPIC": True,
+        "bmp": True,
+        "gif": True,
+        "lbm": True,
+        "pcx": True,
+        "pnm": True,
+        "svg": True,
+        "tga": True,
+        "xcf": True,
+        "xpm": True,
+        "xv": True,
+        "jpg": "libjpeg-turbo",
+        "tif": True,
+        "png": True,
+        "webp": True,
+        "imageio": False}
+    _source_subfolder = "source_subfolder"
+    _build_subfolder = "build_subfolder"
 
     def config_options(self):
         del self.settings.compiler.libcxx
@@ -61,7 +64,7 @@ class SDL2ImageConan(ConanFile):
             del self.options.imageio
 
     def requirements(self):
-        self.requires.add('sdl2/2.0.8@bincrafters/stable')
+        self.requires.add('sdl2/2.0.9@bincrafters/stable')
         if self.options.tif:
             self.requires.add('libtiff/4.0.9@bincrafters/stable')
         if self.options.jpg == 'libjpeg':
@@ -76,9 +79,9 @@ class SDL2ImageConan(ConanFile):
 
     def source(self):
         source_url = "https://www.libsdl.org/projects/SDL_image/release/SDL2_image-%s.tar.gz" % self.version
-        tools.get(source_url, sha256="3510c25da735ffcd8ce3b65073150ff4f7f9493b866e85b83738083b556d2368")
+        tools.get(source_url, sha256="e74ec49c2402eb242fbfa16f2f43a19582a74c2eabfbfb873f00d4250038ceac")
         extracted_dir = "SDL2_image-" + self.version
-        os.rename(extracted_dir, self.source_subfolder)
+        os.rename(extracted_dir, self._source_subfolder)
 
     def build(self):
         cmake = CMake(self)
@@ -109,7 +112,7 @@ class SDL2ImageConan(ConanFile):
         cmake.install()
 
     def package(self):
-        self.copy(pattern="LICENSE", dst="licenses", src=self.source_subfolder)
+        self.copy(pattern="LICENSE", dst="licenses", src=self._source_subfolder)
 
     def package_info(self):
         self.cpp_info.libs = ['SDL2_image']
