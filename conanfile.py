@@ -72,7 +72,7 @@ class SDL2ImageConan(ConanFile):
         elif self.options.jpg == 'libjpeg-turbo':
             self.requires.add('libjpeg-turbo/1.5.2@bincrafters/stable')
         if self.options.png:
-            self.requires.add('libpng/1.6.34@bincrafters/stable')
+            self.requires.add('libpng/1.6.36@bincrafters/stable')
         if self.options.webp:
             self.requires.add('libwebp/1.0.0@bincrafters/stable')
         self.requires.add('zlib/1.2.11@conan/stable')
