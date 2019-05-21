@@ -1,5 +1,5 @@
 [![Download](https://api.bintray.com/packages/bincrafters/public-conan/sdl2_image%3Abincrafters/images/download.svg) ](https://bintray.com/bincrafters/public-conan/sdl2_image%3Abincrafters/_latestVersion)
-[![Build Status Travis](https://travis-ci.org/bincrafters/conan-sdl2_image.svg?branch=stable%2F2.0.4)](https://travis-ci.org/bincrafters/conan-sdl2_image)
+[![Build Status Travis](https://travis-ci.com/bincrafters/conan-sdl2_image.svg?branch=stable%2F2.0.4)](https://travis-ci.com/bincrafters/conan-sdl2_image)
 [![Build Status AppVeyor](https://ci.appveyor.com/api/projects/status/github/bincrafters/conan-sdl2_image?branch=stable%2F2.0.4&svg=true)](https://ci.appveyor.com/project/bincrafters/conan-sdl2_image)
 
 ## Conan package recipe for [*sdl2_image*](https://www.libsdl.org/projects/SDL_image/)
