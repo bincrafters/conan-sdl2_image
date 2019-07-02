@@ -1,6 +1,6 @@
 [![Download](https://api.bintray.com/packages/bincrafters/public-conan/sdl2_image%3Abincrafters/images/download.svg) ](https://bintray.com/bincrafters/public-conan/sdl2_image%3Abincrafters/_latestVersion)
-[![Build Status Travis](https://travis-ci.com/bincrafters/conan-sdl2_image.svg?branch=stable%2F2.0.4)](https://travis-ci.com/bincrafters/conan-sdl2_image)
-[![Build Status AppVeyor](https://ci.appveyor.com/api/projects/status/github/bincrafters/conan-sdl2_image?branch=stable%2F2.0.4&svg=true)](https://ci.appveyor.com/project/bincrafters/conan-sdl2_image)
+[![Build Status Travis](https://travis-ci.com/bincrafters/conan-sdl2_image.svg?branch=stable%2F2.0.5)](https://travis-ci.com/bincrafters/conan-sdl2_image)
+[![Build Status AppVeyor](https://ci.appveyor.com/api/projects/status/github/bincrafters/conan-sdl2_image?branch=stable%2F2.0.5&svg=true)](https://ci.appveyor.com/project/bincrafters/conan-sdl2_image)
 
 ## Conan package recipe for [*sdl2_image*](https://www.libsdl.org/projects/SDL_image/)
 
@@ -11,23 +11,23 @@ The packages generated with this **conanfile** can be found on [Bintray](https:/
 
 ## Issues
 
-If you wish to report an issue or make a request for a Bincrafters package, please do so here:
+If you wish to report an issue or make a request for a package, please do so here:
 
-[Bincrafters Community Issues](https://github.com/bincrafters/community/issues)
+[Issues Tracker](https://github.com/bincrafters/community/issues)
 
 
 ## For Users
 
 ### Basic setup
 
-    $ conan install sdl2_image/2.0.4@bincrafters/stable
+    $ conan install sdl2_image/2.0.5@bincrafters/stable
 
 ### Project setup
 
 If you handle multiple dependencies in your project is better to add a *conanfile.txt*
 
     [requires]
-    sdl2_image/2.0.4@bincrafters/stable
+    sdl2_image/2.0.5@bincrafters/stable
 
     [generators]
     cmake
@@ -78,4 +78,4 @@ The following command both runs all the steps of the conan file, and publishes t
 NOTE: The conan recipe license applies only to the files of this recipe, which can be used to build and package sdl2_image.
 It does *not* in any way apply or is related to the actual software being packaged.
 
-[MIT](https://github.com/bincrafters/conan-sdl2_image/blob/stable/2.0.4/LICENSE.md)
+[MIT](https://github.com/bincrafters/conan-sdl2_image/blob/stable/2.0.5/LICENSE.md)

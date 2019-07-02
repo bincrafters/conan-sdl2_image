@@ -7,11 +7,12 @@ import os
 
 class SDL2ImageConan(ConanFile):
     name = "sdl2_image"
-    version = "2.0.4"
+    version = "2.0.5"
     description = "SDL_image is an image file loading library"
-    topcis = ("conan", "sdl2_image", "sdl_image", "sdl2", "sdl", "images", "opengl")
+    topics = ("conan", "sdl2_image", "sdl_image", "sdl2", "sdl", "images", "opengl")
     url = "https://github.com/bincrafters/conan-sdl2_image"
     homepage = "https://www.libsdl.org/projects/SDL_image/"
+    author = "Bincrafters <bincrafters@gmail.com>"
     license = "MIT"
     exports = ["LICENSE.md"]
     exports_sources = ["CMakeLists.txt"]
@@ -75,11 +76,12 @@ class SDL2ImageConan(ConanFile):
             self.requires.add('libpng/1.6.36@bincrafters/stable')
         if self.options.webp:
             self.requires.add('libwebp/1.0.0@bincrafters/stable')
+            # TODO: Update to libwebp 1.0.2 when available
         self.requires.add('zlib/1.2.11@conan/stable')
 
     def source(self):
         source_url = "https://www.libsdl.org/projects/SDL_image/release/SDL2_image-%s.tar.gz" % self.version
-        tools.get(source_url, sha256="e74ec49c2402eb242fbfa16f2f43a19582a74c2eabfbfb873f00d4250038ceac")
+        tools.get(source_url, sha256="bdd5f6e026682f7d7e1be0b6051b209da2f402a2dd8bd1c4bd9c25ad263108d0")
         extracted_dir = "SDL2_image-" + self.version
         os.rename(extracted_dir, self._source_subfolder)
 
