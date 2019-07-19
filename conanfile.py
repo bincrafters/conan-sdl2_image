@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 from conans import ConanFile, tools, CMake
 import os
 
@@ -73,10 +70,9 @@ class SDL2ImageConan(ConanFile):
         elif self.options.jpg == 'libjpeg-turbo':
             self.requires.add('libjpeg-turbo/1.5.2@bincrafters/stable')
         if self.options.png:
-            self.requires.add('libpng/1.6.36@bincrafters/stable')
+            self.requires.add('libpng/1.6.37@bincrafters/stable')
         if self.options.webp:
-            self.requires.add('libwebp/1.0.0@bincrafters/stable')
-            # TODO: Update to libwebp 1.0.2 when available
+            self.requires.add('libwebp/1.0.3@bincrafters/stable')
         self.requires.add('zlib/1.2.11@conan/stable')
 
     def source(self):
