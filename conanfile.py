@@ -56,6 +56,7 @@ class SDL2ImageConan(ConanFile):
 
     def config_options(self):
         del self.settings.compiler.libcxx
+        del self.settings.compiler.cppstd
         if self.settings.os == 'Windows':
             del self.options.fPIC
         if self.settings.os != 'Macos':
@@ -64,16 +65,16 @@ class SDL2ImageConan(ConanFile):
     def requirements(self):
         self.requires.add('sdl2/2.0.9@bincrafters/stable')
         if self.options.tif:
-            self.requires.add('libtiff/4.0.9@bincrafters/stable')
+            self.requires.add('libtiff/4.0.9')
         if self.options.jpg == 'libjpeg':
-            self.requires.add('libjpeg/9c@bincrafters/stable')
+            self.requires.add('libjpeg/9c')
         elif self.options.jpg == 'libjpeg-turbo':
             self.requires.add('libjpeg-turbo/1.5.2@bincrafters/stable')
         if self.options.png:
-            self.requires.add('libpng/1.6.37@bincrafters/stable')
+            self.requires.add('libpng/1.6.37')
         if self.options.webp:
-            self.requires.add('libwebp/1.0.3@bincrafters/stable')
-        self.requires.add('zlib/1.2.11@conan/stable')
+            self.requires.add('libwebp/1.0.3')
+        self.requires.add('zlib/1.2.11')
 
     def source(self):
         source_url = "https://www.libsdl.org/projects/SDL_image/release/SDL2_image-%s.tar.gz" % self.version
