@@ -9,7 +9,6 @@ class SDL2ImageConan(ConanFile):
     topics = ("conan", "sdl2_image", "sdl_image", "sdl2", "sdl", "images", "opengl")
     url = "https://github.com/bincrafters/conan-sdl2_image"
     homepage = "https://www.libsdl.org/projects/SDL_image/"
-    author = "Bincrafters <bincrafters@gmail.com>"
     license = "MIT"
     exports = ["LICENSE.md"]
     exports_sources = ["CMakeLists.txt"]
