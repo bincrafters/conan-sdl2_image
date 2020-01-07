@@ -26,7 +26,7 @@ class SDL2ImageConan(ConanFile):
         "xcf": [True, False],
         "xpm": [True, False],
         "xv": [True, False],
-        "jpg": ['libjpeg', 'libjpeg-turbo', False],
+        "jpg": [True, False],
         "tif": [True, False],
         "png": [True, False],
         "webp": [True, False],
@@ -44,7 +44,7 @@ class SDL2ImageConan(ConanFile):
         "xcf": True,
         "xpm": True,
         "xv": True,
-        "jpg": "libjpeg-turbo",
+        "jpg": True,
         "tif": True,
         "png": True,
         "webp": True,
@@ -64,10 +64,8 @@ class SDL2ImageConan(ConanFile):
         self.requires.add('sdl2/2.0.10@bincrafters/stable')
         if self.options.tif:
             self.requires.add('libtiff/4.0.9')
-        if self.options.jpg == 'libjpeg':
+        if self.options.jpg:
             self.requires.add('libjpeg/9c')
-        elif self.options.jpg == 'libjpeg-turbo':
-            self.requires.add('libjpeg-turbo/2.0.2')
         if self.options.png:
             self.requires.add('libpng/1.6.37')
         if self.options.webp:
