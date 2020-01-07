@@ -62,13 +62,13 @@ class SDL2ImageConan(ConanFile):
             del self.options.imageio
 
     def requirements(self):
-        self.requires.add('sdl2/2.0.9@bincrafters/stable')
+        self.requires.add('sdl2/2.0.10@bincrafters/stable')
         if self.options.tif:
             self.requires.add('libtiff/4.0.9')
         if self.options.jpg == 'libjpeg':
             self.requires.add('libjpeg/9c')
         elif self.options.jpg == 'libjpeg-turbo':
-            self.requires.add('libjpeg-turbo/1.5.2@bincrafters/stable')
+            self.requires.add('libjpeg-turbo/2.0.2')
         if self.options.png:
             self.requires.add('libpng/1.6.37')
         if self.options.webp:
