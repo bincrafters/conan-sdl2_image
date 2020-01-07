@@ -10,7 +10,6 @@ class SDL2ImageConan(ConanFile):
     url = "https://github.com/bincrafters/conan-sdl2_image"
     homepage = "https://www.libsdl.org/projects/SDL_image/"
     license = "MIT"
-    exports = ["LICENSE.md"]
     exports_sources = ["CMakeLists.txt"]
     generators = ["cmake"]
     settings = "os", "arch", "compiler", "build_type"
