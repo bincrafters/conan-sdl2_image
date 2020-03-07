@@ -54,22 +54,22 @@ class SDL2ImageConan(ConanFile):
     def config_options(self):
         del self.settings.compiler.libcxx
         del self.settings.compiler.cppstd
-        if self.settings.os == 'Windows':
+        if self.settings.os == "Windows":
             del self.options.fPIC
-        if self.settings.os != 'Macos':
+        if self.settings.os != "Macos":
             del self.options.imageio
 
     def requirements(self):
-        self.requires.add('sdl2/2.0.10@bincrafters/stable')
+        self.requires.add("sdl2/2.0.10@bincrafters/stable")
         if self.options.tif:
-            self.requires.add('libtiff/4.0.9')
+            self.requires.add("libtiff/4.0.9")
         if self.options.jpg:
-            self.requires.add('libjpeg/9d')
+            self.requires.add("libjpeg/9d")
         if self.options.png:
-            self.requires.add('libpng/1.6.37')
+            self.requires.add("libpng/1.6.37")
         if self.options.webp:
-            self.requires.add('libwebp/1.0.3')
-        self.requires.add('zlib/1.2.11')
+            self.requires.add("libwebp/1.0.3")
+        self.requires.add("zlib/1.2.11")
 
     def source(self):
         tools.get(**self.conan_data["sources"][self.version])
@@ -78,29 +78,29 @@ class SDL2ImageConan(ConanFile):
 
     def build(self):
         cmake = CMake(self)
-        cmake.definitions['BMP'] = self.options.bmp
-        cmake.definitions['GIF'] = self.options.gif
-        cmake.definitions['JPG'] = self.options.jpg
-        cmake.definitions['LBM'] = self.options.lbm
-        cmake.definitions['PCX'] = self.options.pcx
-        cmake.definitions['PNG'] = self.options.png
-        cmake.definitions['PNM'] = self.options.pnm
-        cmake.definitions['SVG'] = self.options.svg
-        cmake.definitions['TGA'] = self.options.tga
-        cmake.definitions['TIF'] = self.options.tif
-        cmake.definitions['WEBP'] = self.options.webp
-        cmake.definitions['XCF'] = self.options.xcf
-        cmake.definitions['XPM'] = self.options.xpm
-        cmake.definitions['XV'] = self.options.xv
-        cmake.definitions['TIF_DYNAMIC'] = self.options['libtiff'].shared if self.options.tif else False
-        cmake.definitions['JPG_DYNAMIC'] = self.options['libjpeg'].shared if self.options.jpg else False
-        cmake.definitions['PNG_DYNAMIC'] = self.options['libpng'].shared if self.options.png else False
-        cmake.definitions['WEBP_DYNAMIC'] = self.options['libwebp'].shared if self.options.webp else False
-        if self.settings.os == 'Macos':
-            cmake.definitions['IMAGEIO'] = self.options.imageio
+        cmake.definitions["BMP"] = self.options.bmp
+        cmake.definitions["GIF"] = self.options.gif
+        cmake.definitions["JPG"] = self.options.jpg
+        cmake.definitions["LBM"] = self.options.lbm
+        cmake.definitions["PCX"] = self.options.pcx
+        cmake.definitions["PNG"] = self.options.png
+        cmake.definitions["PNM"] = self.options.pnm
+        cmake.definitions["SVG"] = self.options.svg
+        cmake.definitions["TGA"] = self.options.tga
+        cmake.definitions["TIF"] = self.options.tif
+        cmake.definitions["WEBP"] = self.options.webp
+        cmake.definitions["XCF"] = self.options.xcf
+        cmake.definitions["XPM"] = self.options.xpm
+        cmake.definitions["XV"] = self.options.xv
+        cmake.definitions["TIF_DYNAMIC"] = self.options["libtiff"].shared if self.options.tif else False
+        cmake.definitions["JPG_DYNAMIC"] = self.options["libjpeg"].shared if self.options.jpg else False
+        cmake.definitions["PNG_DYNAMIC"] = self.options["libpng"].shared if self.options.png else False
+        cmake.definitions["WEBP_DYNAMIC"] = self.options["libwebp"].shared if self.options.webp else False
+        if self.settings.os == "Macos":
+            cmake.definitions["IMAGEIO"] = self.options.imageio
         else:
-            cmake.definitions['IMAGEIO'] = False
-        cmake.configure(build_dir='build')
+            cmake.definitions["IMAGEIO"] = False
+        cmake.configure(build_dir="build")
         cmake.build()
         cmake.install()
 
@@ -108,5 +108,5 @@ class SDL2ImageConan(ConanFile):
         self.copy(pattern="LICENSE", dst="licenses", src=self._source_subfolder)
 
     def package_info(self):
-        self.cpp_info.libs = ['SDL2_image']
-        self.cpp_info.includedirs.append(os.path.join('include', 'SDL2'))
+        self.cpp_info.libs = ["SDL2_image"]
+        self.cpp_info.includedirs.append(os.path.join("include", "SDL2"))
