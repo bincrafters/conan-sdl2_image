@@ -4,7 +4,6 @@ import os
 
 class SDL2ImageConan(ConanFile):
     name = "sdl2_image"
-    version = "2.0.5"
     description = "SDL_image is an image file loading library"
     topics = ("conan", "sdl2_image", "sdl_image", "sdl2", "sdl", "images", "opengl")
     url = "https://github.com/bincrafters/conan-sdl2_image"
@@ -73,8 +72,7 @@ class SDL2ImageConan(ConanFile):
         self.requires.add('zlib/1.2.11')
 
     def source(self):
-        source_url = "https://www.libsdl.org/projects/SDL_image/release/SDL2_image-%s.tar.gz" % self.version
-        tools.get(source_url, sha256="bdd5f6e026682f7d7e1be0b6051b209da2f402a2dd8bd1c4bd9c25ad263108d0")
+        tools.get(**self.conan_data["sources"][self.version])
         extracted_dir = "SDL2_image-" + self.version
         os.rename(extracted_dir, self._source_subfolder)
 
