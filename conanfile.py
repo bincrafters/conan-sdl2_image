@@ -5,7 +5,7 @@ import os
 class SDL2ImageConan(ConanFile):
     name = "sdl2_image"
     description = "SDL_image is an image file loading library"
-    topics = ("conan", "sdl2_image", "sdl_image", "sdl2", "sdl", "images", "opengl")
+    topics = ("sdl2_image", "sdl_image", "sdl2", "sdl", "images", "opengl")
     url = "https://github.com/bincrafters/conan-sdl2_image"
     homepage = "https://www.libsdl.org/projects/SDL_image/"
     license = "MIT"
